@@ -3,36 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
+
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Health _health;
+    [SerializeField] private Text _text;
 
     private Slider _slider;
-    private Text _text;
     private bool _isChanging;
     private float _stepOfValueChange;
 
     private void Start()
     {
-        _text = gameObject.GetComponentInChildren<HealthMeter>().GetComponent<Text>();
         _slider = gameObject.GetComponent<Slider>();
         _slider.minValue = _health.MinValue;
         _slider.maxValue = _health.MaxValue;
         _slider.value = _health.CurrentValue;
         _isChanging = false;
         _stepOfValueChange = _health.MaxValue / 3000;
-    }
 
-    private void Update()
-    {
-        if (_isChanging != true)
-        {
-            if (_slider.value != _health.CurrentValue)
-            {
-                StartCoroutine(ChangeSliderValue());
-                _text.text = _health.CurrentValue.ToString();
-            }
-        }
+        StartCoroutine(CheckHealthChange());
     }
 
     private IEnumerator ChangeSliderValue()
@@ -48,5 +39,24 @@ public class HealthBar : MonoBehaviour
         }
 
         _isChanging = false;
+    }
+
+    private IEnumerator CheckHealthChange()
+    {
+        var timeBetweenChecks = new WaitForSeconds(0.5f);
+
+        while (true)
+        {
+            if (_isChanging != true)
+            {
+                if (_slider.value != _health.CurrentValue)
+                {
+                    StartCoroutine(ChangeSliderValue());
+                    _text.text = _health.CurrentValue.ToString();
+                }
+            }
+
+            yield return timeBetweenChecks;
+        }
     }
 }

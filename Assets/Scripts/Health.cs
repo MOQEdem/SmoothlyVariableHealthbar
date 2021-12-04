@@ -13,18 +13,24 @@ public class Health : MonoBehaviour
     public float MaxValue => _maxValue;
     public float MinValue => _minValue;
 
-    void Start()
+    private void Start()
     {
         _currentValue = _maxValue / 2;
     }
 
-    public void ChangeValue(float valueOfChange)
+    public void Damage(float damageValue)
     {
-        _currentValue += valueOfChange;
+        _currentValue -= damageValue;
 
         if (_currentValue < _minValue)
             _currentValue = _minValue;
-        else if (_currentValue > _maxValue)
+    }
+
+    public void Heal(float healValue)
+    {
+        _currentValue += healValue;
+
+        if (_currentValue > _maxValue)
             _currentValue = _maxValue;
     }
 }

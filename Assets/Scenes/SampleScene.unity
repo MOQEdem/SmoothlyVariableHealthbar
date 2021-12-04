@@ -895,9 +895,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0.5
+  m_Value: 50
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -914,6 +914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1538487289}
+  _text: {fileID: 252623406}
 --- !u!1 &1424632081
 GameObject:
   m_ObjectHideFlags: 0
@@ -1274,7 +1275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1538487289}
         m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: ChangeValue
+        m_MethodName: Heal
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1408,13 +1409,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1538487289}
         m_TargetAssemblyTypeName: Health, Assembly-CSharp
-        m_MethodName: ChangeValue
+        m_MethodName: Damage
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: -10
+          m_FloatArgument: 10
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
