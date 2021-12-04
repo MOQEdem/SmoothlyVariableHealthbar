@@ -21,10 +21,10 @@ public class HealthBar : MonoBehaviour
         _slider.value = _health.CurrentValue;
         _stepOfValueChange = _health.MaxValue / 3000;
 
-        StartCoroutine(ManipulationSliderValue());
+        StartCoroutine(ManipulateSliderValue());
     }
 
-    private IEnumerator ManipulationSliderValue()
+    private IEnumerator ManipulateSliderValue()
     {
         var timeBetweenChecks = new WaitForSeconds(0.5f);
 
