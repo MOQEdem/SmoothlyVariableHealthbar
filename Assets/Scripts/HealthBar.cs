@@ -12,33 +12,46 @@ public class HealthBar : MonoBehaviour
 
     private Slider _slider;
     private float _stepOfValueChange;
+    private bool _isChanging;
+
+    private void OnEnable()
+    {
+        _health.ValueChanged += StartChangingCoroutine;
+    }
+
+    private void OnDisable()
+    {
+        _health.ValueChanged -= StartChangingCoroutine;
+    }
 
     private void Start()
     {
-        _slider = gameObject.GetComponent<Slider>();
+        _slider = GetComponent<Slider>();
         _slider.minValue = _health.MinValue;
         _slider.maxValue = _health.MaxValue;
         _slider.value = _health.CurrentValue;
         _stepOfValueChange = _health.MaxValue / 3000;
+        _isChanging = false;
+    }
 
-        StartCoroutine(ManipulateSliderValue());
+    private void StartChangingCoroutine()
+    {
+        if (_isChanging != true)
+            StartCoroutine(ManipulateSliderValue());
     }
 
     private IEnumerator ManipulateSliderValue()
     {
-        var timeBetweenChecks = new WaitForSeconds(0.5f);
+        _isChanging = true;
 
-        while (true)
+        while (_slider.value != _health.CurrentValue)
         {
-            while (_slider.value != _health.CurrentValue)
-            {
-                _slider.value = Mathf.MoveTowards(_slider.value, _health.CurrentValue, _stepOfValueChange);
-                _text.text = _health.CurrentValue.ToString();
-                yield return null;
-            }
-
-            yield return timeBetweenChecks;
+            _slider.value = Mathf.MoveTowards(_slider.value, _health.CurrentValue, _stepOfValueChange);
+            _text.text = _health.CurrentValue.ToString();
+            yield return null;
         }
+
+        _isChanging = false;
     }
 }
 
